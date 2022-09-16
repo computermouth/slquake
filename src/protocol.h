@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // a sound with no channel is a local only sound
 #define	SND_VOLUME		(1<<0)		// a byte
 #define	SND_ATTENUATION	(1<<1)		// a byte
-#define	SND_LOOPING		(1<<2)		// a long
+#define	SND_LOOPING		(1<<2)		// a int32_t
 
 
 // defaults for clientinfo messages
@@ -86,9 +86,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	svc_bad				0
 #define	svc_nop				1
 #define	svc_disconnect		2
-#define	svc_updatestat		3	// [byte] [long]
-#define	svc_version			4	// [long] server version
-#define	svc_setview			5	// [short] entity number
+#define	svc_updatestat		3	// [byte] [int32_t]
+#define	svc_version			4	// [int32_t] server version
+#define	svc_setview			5	// [int16_t] entity number
 #define	svc_sound			6	// <see code>
 #define	svc_time			7	// [float] server time
 #define	svc_print			8	// [string] null terminated string
@@ -96,14 +96,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 								// the string should be \n terminated
 #define	svc_setangle		10	// [angle3] set the view angle to this absolute value
 	
-#define	svc_serverinfo		11	// [long] version
+#define	svc_serverinfo		11	// [int32_t] version
 						// [string] signon string
 						// [string]..[0]model cache
 						// [string]...[0]sounds cache
 #define	svc_lightstyle		12	// [byte] [string]
 #define	svc_updatename		13	// [byte] [string]
-#define	svc_updatefrags		14	// [byte] [short]
-#define	svc_clientdata		15	// <shortbits + data>
+#define	svc_updatefrags		14	// [byte] [int16_t]
+#define	svc_clientdata		15	// <int16_tbits + data>
 #define	svc_stopsound		16	// <see code>
 #define	svc_updatecolors	17	// [byte] [byte]
 #define	svc_particle		18	// [vec3] <variable>

@@ -27,24 +27,24 @@ char *svc_strings[] =
 	"svc_nop",
 	"svc_disconnect",
 	"svc_updatestat",
-	"svc_version",		// [long] server version
-	"svc_setview",		// [short] entity number
-	"svc_sound",			// <see code>
+	"svc_version",		// [int32_t] server version
+	"svc_setview",		// [int16_t] entity number
+	"svc_sound",		// <see code>
 	"svc_time",			// [float] server time
-	"svc_print",			// [string] null terminated string
-	"svc_stufftext",		// [string] stuffed into client's console buffer
+	"svc_print",		// [string] null terminated string
+	"svc_stufftext",	// [string] stuffed into client's console buffer
 						// the string should be \n terminated
 	"svc_setangle",		// [vec3] set the view angle to this absolute value
 	
-	"svc_serverinfo",		// [long] version
+	"svc_serverinfo",	// [int32_t] version
 						// [string] signon string
 						// [string]..[0]model cache [string]...[0]sounds cache
 						// [string]..[0]item cache
-	"svc_lightstyle",		// [byte] [string]
-	"svc_updatename",		// [byte] [string]
-	"svc_updatefrags",	// [byte] [short]
-	"svc_clientdata",		// <shortbits + data>
-	"svc_stopsound",		// <see code>
+	"svc_lightstyle",	// [byte] [string]
+	"svc_updatename",	// [byte] [string]
+	"svc_updatefrags",	// [byte] [int16_t]
+	"svc_clientdata",	// <int16_tbits + data>
+	"svc_stopsound",	// <see code>
 	"svc_updatecolors",	// [byte] [byte]
 	"svc_particle",		// [vec3] <variable>
 	"svc_damage",			// [byte] impact [byte] blood [vec3] from

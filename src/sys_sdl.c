@@ -445,7 +445,7 @@ void Sys_MakeCodeWriteable (uint32_t startaddr, uint32_t length)
 	uint32_t addr;
 	int32_t psize = getpagesize();
 
-	fprintf(stderr, "writable code %lx-%lx\n", startaddr, startaddr+length);
+	fprintf(stderr, "writable code %x-%x\n", startaddr, startaddr+length);
 
 	addr = startaddr & ~(psize-1);
 

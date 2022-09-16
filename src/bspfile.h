@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_MAP_ENTSTRING	65536
 
 #define	MAX_MAP_PLANES		32767
-#define	MAX_MAP_NODES		32767		// because negative shorts are contents
+#define	MAX_MAP_NODES		32767		// because negative int16_ts are contents
 #define	MAX_MAP_CLIPNODES	32767		//
 #define	MAX_MAP_LEAFS		8192
 #define	MAX_MAP_VERTS		65535
@@ -157,9 +157,9 @@ typedef struct
 typedef struct
 {
 	int32_t			planenum;
-	short		children[2];	// negative numbers are -(leafs+1), not nodes
-	short		mins[3];		// for sphere culling
-	short		maxs[3];
+	int16_t		children[2];	// negative numbers are -(leafs+1), not nodes
+	int16_t		mins[3];		// for sphere culling
+	int16_t		maxs[3];
 	uint16_t	firstface;
 	uint16_t	numfaces;	// counting both sides
 } dnode_t;
@@ -167,7 +167,7 @@ typedef struct
 typedef struct
 {
 	int32_t			planenum;
-	short		children[2];	// negative numbers are contents
+	int16_t		children[2];	// negative numbers are contents
 } dclipnode_t;
 
 
@@ -189,12 +189,12 @@ typedef struct
 #define	MAXLIGHTMAPS	4
 typedef struct
 {
-	short		planenum;
-	short		side;
+	int16_t		planenum;
+	int16_t		side;
 
 	int32_t			firstedge;		// we must support > 64k edges
-	short		numedges;	
-	short		texinfo;
+	int16_t		numedges;	
+	int16_t		texinfo;
 
 // lighting info
 	byte		styles[MAXLIGHTMAPS];
@@ -217,8 +217,8 @@ typedef struct
 	int32_t			contents;
 	int32_t			visofs;				// -1 = no visibility info
 
-	short		mins[3];			// for frustum culling
-	short		maxs[3];
+	int16_t		mins[3];			// for frustum culling
+	int16_t		maxs[3];
 
 	uint16_t		firstmarksurface;
 	uint16_t		nummarksurfaces;

@@ -84,7 +84,7 @@ surfcache_t	*D_CacheSurface (msurface_t *surface, int32_t miplevel);
 
 extern int32_t D_MipLevelForScale (float scale);
 
-extern short *d_pzbuffer;
+extern int16_t *d_pzbuffer;
 extern uint32_t d_zrowbytes, d_zwidth;
 
 extern int32_t	*d_pscantable;
@@ -96,7 +96,7 @@ extern int32_t	d_y_aspect_shift, d_pix_min, d_pix_max, d_pix_shift;
 
 extern pixel_t	*d_viewbuffer;
 
-extern short	*zspantable[MAXHEIGHT];
+extern int16_t	*zspantable[MAXHEIGHT];
 
 extern int32_t		d_minmip;
 extern float	d_scalemip[3];

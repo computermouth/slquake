@@ -1029,7 +1029,7 @@ Mod_LoadMarksurfaces
 void Mod_LoadMarksurfaces (lump_t *l)
 {	
 	int32_t		i, j, count;
-	short		*in;
+	int16_t		*in;
 	msurface_t **out;
 	
 	in = (void *)(mod_base + l->fileofs);

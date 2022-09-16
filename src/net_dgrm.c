@@ -35,7 +35,7 @@ struct in_addr
 #define	s_addr	S_un.S_addr	/* can be used for most tcp & ip code */
 struct sockaddr_in
 {
-    short			sin_family;
+    int16_t			sin_family;
     uint16_t	sin_port;
 	struct in_addr	sin_addr;
     char			sin_zero[8];

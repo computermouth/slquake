@@ -131,7 +131,7 @@ void Q_memset (void *dest, int32_t fill, int32_t count)
 {
 	int32_t             i;
 	
-	if ( (((long)dest | count) & 3) == 0)
+	if ( (((int32_t)dest | count) & 3) == 0)
 	{
 		count >>= 2;
 		fill = fill | (fill<<8) | (fill<<16) | (fill<<24);
@@ -147,7 +147,7 @@ void Q_memcpy (void *dest, void *src, int32_t count)
 {
 	int32_t             i;
 	
-	if (( ( (long)dest | (long)src | count) & 3) == 0 )
+	if (( ( (int32_t)dest | (int32_t)src | count) & 3) == 0 )
 	{
 		count>>=2;
 		for (i=0 ; i<count ; i++)
@@ -425,14 +425,14 @@ float Q_atof (char *str)
 
 qboolean        bigendien;
 
-short   (*BigShort) (short l);
-short   (*LittleShort) (short l);
+int16_t   (*BigShort) (int16_t l);
+int16_t   (*LittleShort) (int16_t l);
 int32_t     (*BigLong) (int32_t l);
 int32_t     (*LittleLong) (int32_t l);
 float   (*BigFloat) (float l);
 float   (*LittleFloat) (float l);
 
-short   ShortSwap (short l)
+int16_t   ShortSwap (int16_t l)
 {
 	byte    b1,b2;
 
@@ -442,7 +442,7 @@ short   ShortSwap (short l)
 	return (b1<<8) + b2;
 }
 
-short   ShortNoSwap (short l)
+int16_t   ShortNoSwap (int16_t l)
 {
 	return l;
 }
@@ -591,7 +591,7 @@ int32_t MSG_ReadChar (void)
 		return -1;
 	}
 		
-	c = (signed char)net_message.data[msg_readcount];
+	c = (int8_t)net_message.data[msg_readcount];
 	msg_readcount++;
 	
 	return c;
@@ -623,7 +623,7 @@ int32_t MSG_ReadShort (void)
 		return -1;
 	}
 		
-	c = (short)(net_message.data[msg_readcount]
+	c = (int16_t)(net_message.data[msg_readcount]
 	+ (net_message.data[msg_readcount+1]<<8));
 	
 	msg_readcount += 2;
@@ -1094,7 +1094,7 @@ void COM_Init (char *basedir)
 	byte    swaptest[2] = {1,0};
 
 // set the byte swapping variables in a portable manner 
-	if ( *(short *)swaptest == 1)
+	if ( *(int16_t *)swaptest == 1)
 	{
 		bigendien = false;
 		BigShort = ShortSwap;

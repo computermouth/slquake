@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	void			*pdest;
-	short			*pz;
+	int16_t			*pz;
 	int32_t				count;
 	byte			*ptex;
 	int32_t				sfrac, tfrac, light, zi;
@@ -81,7 +81,7 @@ spanpackage_t			*a_spans;
 spanpackage_t			*d_pedgespanpackage;
 static int32_t				ystart;
 byte					*d_pdest, *d_ptex;
-short					*d_pz;
+int16_t					*d_pz;
 int32_t						d_sfrac, d_tfrac, d_light, d_zi;
 int32_t						d_ptexextrastep, d_sfracextrastep;
 int32_t						d_tfracextrastep, d_lightextrastep, d_pdestextrastep;
@@ -124,7 +124,7 @@ void D_PolysetDraw (void)
 						// one extra because of cache line pretouching
 
 	a_spans = (spanpackage_t *)
-			(((long)&spans[0] + CACHE_SIZE - 1) & ~(CACHE_SIZE - 1));
+			(((int32_t)&spans[0] + CACHE_SIZE - 1) & ~(CACHE_SIZE - 1));
 
 	if (r_affinetridesc.drawtype)
 	{
@@ -145,7 +145,7 @@ D_PolysetDrawFinalVerts
 void D_PolysetDrawFinalVerts (finalvert_t *fv, int32_t numverts)
 {
 	int32_t		i, z;
-	short	*zbuf;
+	int16_t	*zbuf;
 
 	for (i=0 ; i<numverts ; i++, fv++)
 	{
@@ -310,7 +310,7 @@ void D_PolysetRecursiveTriangle (int32_t *lp1, int32_t *lp2, int32_t *lp3)
 	int32_t		d;
 	int32_t		new[6];
 	int32_t		z;
-	short	*zbuf;
+	int16_t	*zbuf;
 
 	d = lp2[0] - lp1[0];
 	if (d < -1 || d > 1)
@@ -575,7 +575,7 @@ void D_PolysetDrawSpans8 (spanpackage_t *pspanpackage)
 	int32_t		lsfrac, ltfrac;
 	int32_t		llight;
 	int32_t		lzi;
-	short	*lpz;
+	int16_t	*lpz;
 
 	do
 	{

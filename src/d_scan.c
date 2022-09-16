@@ -382,7 +382,7 @@ void D_DrawZSpans (espan_t *pspan)
 {
 	int32_t				count, doublecount, izistep;
 	int32_t				izi;
-	short			*pdest;
+	int16_t			*pdest;
 	uint32_t		ltemp;
 	double			zi;
 	float			du, dv;
@@ -405,9 +405,9 @@ void D_DrawZSpans (espan_t *pspan)
 	// we count on FP exceptions being turned off to avoid range problems
 		izi = (int32_t)(zi * 0x8000 * 0x10000);
 
-		if ((long)pdest & 0x02)
+		if ((int32_t)pdest & 0x02)
 		{
-			*pdest++ = (short)(izi >> 16);
+			*pdest++ = (int16_t)(izi >> 16);
 			izi += izistep;
 			count--;
 		}
@@ -426,7 +426,7 @@ void D_DrawZSpans (espan_t *pspan)
 		}
 
 		if (count & 1)
-			*pdest = (short)(izi >> 16);
+			*pdest = (int16_t)(izi >> 16);
 
 	} while ((pspan = pspan->pnext) != NULL);
 }

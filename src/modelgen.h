@@ -77,7 +77,7 @@ typedef struct {
 	float		size;
 } mdl_t;
 
-// TODO: could be shorts
+// TODO: could be shorts (int16_t)
 
 typedef struct {
 	int32_t		onseam;
