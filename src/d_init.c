@@ -126,7 +126,7 @@ void D_SetupFrame (void)
 	if (r_dowarp)
 		d_viewbuffer = r_warpbuffer;
 	else
-		d_viewbuffer = (void *)(byte *)vid.buffer;
+		d_viewbuffer = (void *)(uint8_t *)vid.buffer;
 
 	screenwidth = vid.rowbytes;
 

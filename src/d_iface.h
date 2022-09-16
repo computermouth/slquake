@@ -143,7 +143,7 @@ extern vec3_t	r_pright, r_pup, r_ppn;
 
 
 void D_Aff8Patch (void *pcolormap);
-void D_BeginDirectRect (int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height);
+void D_BeginDirectRect (int32_t x, int32_t y, uint8_t *pbitmap, int32_t width, int32_t height);
 void D_DisableBackBufferAccess (void);
 void D_EndDirectRect (int32_t x, int32_t y, int32_t width, int32_t height);
 void D_PolysetDraw (void);
@@ -173,7 +173,7 @@ void D_PolysetUpdateTables (void);
 
 // these are currently for internal use only, and should not be used by drivers
 extern int32_t				r_skydirect;
-extern byte				*r_skysource;
+extern uint8_t				*r_skysource;
 
 // transparency types for D_DrawRect ()
 #define DR_SOLID		0
@@ -224,6 +224,6 @@ extern float	skytime;
 extern int32_t		c_surf;
 extern vrect_t	scr_vrect;
 
-extern byte		*r_warpbuffer;
+extern uint8_t		*r_warpbuffer;
 
 #endif

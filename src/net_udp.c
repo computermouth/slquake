@@ -235,7 +235,7 @@ int32_t UDP_CheckNewConnections (void)
 
 //=============================================================================
 
-int32_t UDP_Read (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr)
+int32_t UDP_Read (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr)
 {
 	int32_t addrlen = sizeof (struct qsockaddr);
 	int32_t ret;
@@ -262,7 +262,7 @@ int32_t UDP_MakeSocketBroadcastCapable (int32_t socket)
 
 //=============================================================================
 
-int32_t UDP_Broadcast (int32_t socket, byte *buf, int32_t len)
+int32_t UDP_Broadcast (int32_t socket, uint8_t *buf, int32_t len)
 {
 	int32_t ret;
 
@@ -283,7 +283,7 @@ int32_t UDP_Broadcast (int32_t socket, byte *buf, int32_t len)
 
 //=============================================================================
 
-int32_t UDP_Write (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr)
+int32_t UDP_Write (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr)
 {
 	int32_t ret;
 

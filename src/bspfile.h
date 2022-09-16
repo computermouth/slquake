@@ -197,7 +197,7 @@ typedef struct
 	int16_t		texinfo;
 
 // lighting info
-	byte		styles[MAXLIGHTMAPS];
+	uint8_t		styles[MAXLIGHTMAPS];
 	int32_t			lightofs;		// start of [numstyles*surfsize] samples
 } dface_t;
 
@@ -223,7 +223,7 @@ typedef struct
 	uint16_t		firstmarksurface;
 	uint16_t		nummarksurfaces;
 
-	byte		ambient_level[NUM_AMBIENTS];
+	uint8_t		ambient_level[NUM_AMBIENTS];
 } dleaf_t;
 
 
@@ -241,13 +241,13 @@ extern	int32_t			nummodels;
 extern	dmodel_t	dmodels[MAX_MAP_MODELS];
 
 extern	int32_t			visdatasize;
-extern	byte		dvisdata[MAX_MAP_VISIBILITY];
+extern	uint8_t		dvisdata[MAX_MAP_VISIBILITY];
 
 extern	int32_t			lightdatasize;
-extern	byte		dlightdata[MAX_MAP_LIGHTING];
+extern	uint8_t		dlightdata[MAX_MAP_LIGHTING];
 
 extern	int32_t			texdatasize;
-extern	byte		dtexdata[MAX_MAP_MIPTEX]; // (dmiptexlump_t)
+extern	uint8_t		dtexdata[MAX_MAP_MIPTEX]; // (dmiptexlump_t)
 
 extern	int32_t			entdatasize;
 extern	char		dentdata[MAX_MAP_ENTSTRING];
@@ -283,8 +283,8 @@ extern	int32_t			numsurfedges;
 extern	int32_t			dsurfedges[MAX_MAP_SURFEDGES];
 
 
-void DecompressVis (byte *in, byte *decompressed);
-int32_t CompressVis (byte *vis, byte *dest);
+void DecompressVis (uint8_t *in, uint8_t *decompressed);
+int32_t CompressVis (uint8_t *vis, uint8_t *dest);
 
 void	LoadBSPFile (char *filename);
 void	WriteBSPFile (char *filename);

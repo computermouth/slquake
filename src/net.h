@@ -60,14 +60,14 @@ struct qsockaddr
 //
 // CCREQ_CONNECT
 //		string	game_name				"QUAKE"
-//		byte	net_protocol_version	NET_PROTOCOL_VERSION
+//		uint8_t	net_protocol_version	NET_PROTOCOL_VERSION
 //
 // CCREQ_SERVER_INFO
 //		string	game_name				"QUAKE"
-//		byte	net_protocol_version	NET_PROTOCOL_VERSION
+//		uint8_t	net_protocol_version	NET_PROTOCOL_VERSION
 //
 // CCREQ_PLAYER_INFO
-//		byte	player_number
+//		uint8_t	player_number
 //
 // CCREQ_RULE_INFO
 //		string	rule
@@ -84,12 +84,12 @@ struct qsockaddr
 //		string	server_address
 //		string	host_name
 //		string	level_name
-//		byte	current_players
-//		byte	max_players
-//		byte	protocol_version	NET_PROTOCOL_VERSION
+//		uint8_t	current_players
+//		uint8_t	max_players
+//		uint8_t	protocol_version	NET_PROTOCOL_VERSION
 //
 // CCREP_PLAYER_INFO
-//		byte	player_number
+//		uint8_t	player_number
 //		string	name
 //		long	colors
 //		long	frags
@@ -141,12 +141,12 @@ typedef struct qsocket_s
 	uint32_t	sendSequence;
 	uint32_t	unreliableSendSequence;
 	int32_t				sendMessageLength;
-	byte			sendMessage [NET_MAXMESSAGE];
+	uint8_t			sendMessage [NET_MAXMESSAGE];
 
 	uint32_t	receiveSequence;
 	uint32_t	unreliableReceiveSequence;
 	int32_t				receiveMessageLength;
-	byte			receiveMessage [NET_MAXMESSAGE];
+	uint8_t			receiveMessage [NET_MAXMESSAGE];
 
 	struct qsockaddr	addr;
 	char				address[NET_NAMELEN];
@@ -169,9 +169,9 @@ typedef struct
 	int32_t 		(*CloseSocket) (int32_t socket);
 	int32_t 		(*Connect) (int32_t socket, struct qsockaddr *addr);
 	int32_t 		(*CheckNewConnections) (void);
-	int32_t 		(*Read) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
-	int32_t 		(*Write) (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
-	int32_t 		(*Broadcast) (int32_t socket, byte *buf, int32_t len);
+	int32_t 		(*Read) (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Write) (int32_t socket, uint8_t *buf, int32_t len, struct qsockaddr *addr);
+	int32_t 		(*Broadcast) (int32_t socket, uint8_t *buf, int32_t len);
 	char *		(*AddrToString) (struct qsockaddr *addr);
 	int32_t 		(*StringToAddr) (char *string, struct qsockaddr *addr);
 	int32_t 		(*GetSocketAddr) (int32_t socket, struct qsockaddr *addr);

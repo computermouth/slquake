@@ -258,8 +258,8 @@ cshift_t	cshift_lava = { {255,80,0}, 150 };
 
 cvar_t		v_gamma = {"gamma", "1", true};
 
-byte		gammatable[256];	// palette is sent through this
-byte		ramps[3][256];
+uint8_t		gammatable[256];	// palette is sent through this
+uint8_t		ramps[3][256];
 float		v_blend[4];		// rgba 0.0 - 1.0
 
 void BuildGammaTable (float g)
@@ -479,8 +479,8 @@ void V_UpdatePalette (void)
 {
 	int32_t		i, j;
 	qboolean	new;
-	byte	*basepal, *newpal;
-	byte	pal[768];
+	uint8_t	*basepal, *newpal;
+	uint8_t	pal[768];
 	int32_t		r,g,b;
 	qboolean force;
 

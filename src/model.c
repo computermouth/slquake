@@ -33,7 +33,7 @@ void Mod_LoadBrushModel (model_t *mod, void *buffer);
 void Mod_LoadAliasModel (model_t *mod, void *buffer);
 model_t *Mod_LoadModel (model_t *mod, qboolean crash);
 
-byte	mod_novis[MAX_MAP_LEAFS/8];
+uint8_t	mod_novis[MAX_MAP_LEAFS/8];
 
 #define	MAX_MOD_KNOWN	256
 model_t	mod_known[MAX_MOD_KNOWN];
@@ -112,11 +112,11 @@ mleaf_t *Mod_PointInLeaf (vec3_t p, model_t *model)
 Mod_DecompressVis
 ===================
 */
-byte *Mod_DecompressVis (byte *in, model_t *model)
+uint8_t *Mod_DecompressVis (uint8_t *in, model_t *model)
 {
-	static byte	decompressed[MAX_MAP_LEAFS/8];
+	static uint8_t	decompressed[MAX_MAP_LEAFS/8];
 	int32_t		c;
-	byte	*out;
+	uint8_t	*out;
 	int32_t		row;
 
 	row = (model->numleafs+7)>>3;	
@@ -152,7 +152,7 @@ byte *Mod_DecompressVis (byte *in, model_t *model)
 	return decompressed;
 }
 
-byte *Mod_LeafPVS (mleaf_t *leaf, model_t *model)
+uint8_t *Mod_LeafPVS (mleaf_t *leaf, model_t *model)
 {
 	if (leaf == model->leafs)
 		return mod_novis;
@@ -256,7 +256,7 @@ Loads a model into the cache
 model_t *Mod_LoadModel (model_t *mod, qboolean crash)
 {
 	uint32_t *buf;
-	byte	stackbuf[1024];		// avoid dirtying the cache heap
+	uint8_t	stackbuf[1024];		// avoid dirtying the cache heap
 
 	if (mod->type == mod_alias)
 	{
@@ -344,7 +344,7 @@ model_t *Mod_ForName (char *name, qboolean crash)
 ===============================================================================
 */
 
-byte	*mod_base;
+uint8_t	*mod_base;
 
 
 /*
@@ -378,7 +378,7 @@ void Mod_LoadTextures (lump_t *l)
 		m->dataofs[i] = LittleLong(m->dataofs[i]);
 		if (m->dataofs[i] == -1)
 			continue;
-		mt = (miptex_t *)((byte *)m + m->dataofs[i]);
+		mt = (miptex_t *)((uint8_t *)m + m->dataofs[i]);
 		mt->width = LittleLong (mt->width);
 		mt->height = LittleLong (mt->height);
 		for (j=0 ; j<MIPLEVELS ; j++)
@@ -1149,7 +1149,7 @@ void Mod_LoadBrushModel (model_t *mod, void *buffer)
 		Sys_Error ("Mod_LoadBrushModel: %s has wrong version number (%i should be %i)", mod->name, i, BSPVERSION);
 
 // swap all the lumps
-	mod_base = (byte *)header;
+	mod_base = (uint8_t *)header;
 
 	for (i=0 ; i<sizeof(dheader_t)/4 ; i++)
 		((int32_t *)header)[i] = LittleLong ( ((int32_t *)header)[i]);
@@ -1239,7 +1239,7 @@ void * Mod_LoadAliasFrame (void * pin, int32_t *pframeindex, int32_t numv,
 
 	for (i=0 ; i<3 ; i++)
 	{
-	// these are byte values, so we don't have to worry about
+	// these are uint8_t values, so we don't have to worry about
 	// endianness
 		pbboxmin->v[i] = pdaliasframe->bboxmin.v[i];
 		pbboxmax->v[i] = pdaliasframe->bboxmax.v[i];
@@ -1248,13 +1248,13 @@ void * Mod_LoadAliasFrame (void * pin, int32_t *pframeindex, int32_t numv,
 	pinframe = (trivertx_t *)(pdaliasframe + 1);
 	pframe = Hunk_AllocName (numv * sizeof(*pframe), loadname);
 
-	*pframeindex = (byte *)pframe - (byte *)pheader;
+	*pframeindex = (uint8_t *)pframe - (uint8_t *)pheader;
 
 	for (j=0 ; j<numv ; j++)
 	{
 		int32_t		k;
 
-	// these are all byte values, so no need to deal with endianness
+	// these are all uint8_t values, so no need to deal with endianness
 		pframe[j].lightnormalindex = pinframe[j].lightnormalindex;
 
 		for (k=0 ; k<3 ; k++)
@@ -1295,18 +1295,18 @@ void * Mod_LoadAliasGroup (void * pin, int32_t *pframeindex, int32_t numv,
 
 	for (i=0 ; i<3 ; i++)
 	{
-	// these are byte values, so we don't have to worry about endianness
+	// these are uint8_t values, so we don't have to worry about endianness
 		pbboxmin->v[i] = pingroup->bboxmin.v[i];
 		pbboxmax->v[i] = pingroup->bboxmax.v[i];
 	}
 
-	*pframeindex = (byte *)paliasgroup - (byte *)pheader;
+	*pframeindex = (uint8_t *)paliasgroup - (uint8_t *)pheader;
 
 	pin_intervals = (daliasinterval_t *)(pingroup + 1);
 
 	poutintervals = Hunk_AllocName (numframes * sizeof (float), loadname);
 
-	paliasgroup->intervals = (byte *)poutintervals - (byte *)pheader;
+	paliasgroup->intervals = (uint8_t *)poutintervals - (uint8_t *)pheader;
 
 	for (i=0 ; i<numframes ; i++)
 	{
@@ -1343,12 +1343,12 @@ void * Mod_LoadAliasSkin (void * pin, int32_t *pskinindex, int32_t skinsize,
 	aliashdr_t *pheader)
 {
 	int32_t		i;
-	byte	*pskin, *pinskin;
+	uint8_t	*pskin, *pinskin;
 	uint16_t	*pusskin;
 
 	pskin = Hunk_AllocName (skinsize * r_pixbytes, loadname);
-	pinskin = (byte *)pin;
-	*pskinindex = (byte *)pskin - (byte *)pheader;
+	pinskin = (uint8_t *)pin;
+	*pskinindex = (uint8_t *)pskin - (uint8_t *)pheader;
 
 	if (r_pixbytes == 1)
 	{
@@ -1398,13 +1398,13 @@ void * Mod_LoadAliasSkinGroup (void * pin, int32_t *pskinindex, int32_t skinsize
 
 	paliasskingroup->numskins = numskins;
 
-	*pskinindex = (byte *)paliasskingroup - (byte *)pheader;
+	*pskinindex = (uint8_t *)paliasskingroup - (uint8_t *)pheader;
 
 	pinskinintervals = (daliasskininterval_t *)(pinskingroup + 1);
 
 	poutskinintervals = Hunk_AllocName (numskins * sizeof (float),loadname);
 
-	paliasskingroup->intervals = (byte *)poutskinintervals - (byte *)pheader;
+	paliasskingroup->intervals = (uint8_t *)poutskinintervals - (uint8_t *)pheader;
 
 	for (i=0 ; i<numskins ; i++)
 	{
@@ -1469,7 +1469,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 			LittleLong (pinmodel->numtris) * sizeof (mtriangle_t);
 
 	pheader = Hunk_AllocName (size, loadname);
-	pmodel = (mdl_t *) ((byte *)&pheader[1] +
+	pmodel = (mdl_t *) ((uint8_t *)&pheader[1] +
 			(LittleLong (pinmodel->numframes) - 1) *
 			 sizeof (pheader->frames[0]));
 	
@@ -1519,7 +1519,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	if (pmodel->skinwidth & 0x03)
 		Sys_Error ("Mod_LoadAliasModel: skinwidth not multiple of 4");
 
-	pheader->model = (byte *)pmodel - (byte *)pheader;
+	pheader->model = (uint8_t *)pmodel - (uint8_t *)pheader;
 
 //
 // load the skins
@@ -1534,7 +1534,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	pskindesc = Hunk_AllocName (numskins * sizeof (maliasskindesc_t),
 								loadname);
 
-	pheader->skindesc = (byte *)pskindesc - (byte *)pheader;
+	pheader->skindesc = (uint8_t *)pskindesc - (uint8_t *)pheader;
 
 	for (i=0 ; i<numskins ; i++)
 	{
@@ -1565,7 +1565,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	pstverts = (stvert_t *)&pmodel[1];
 	pinstverts = (stvert_t *)pskintype;
 
-	pheader->stverts = (byte *)pstverts - (byte *)pheader;
+	pheader->stverts = (uint8_t *)pstverts - (uint8_t *)pheader;
 
 	for (i=0 ; i<pmodel->numverts ; i++)
 	{
@@ -1581,7 +1581,7 @@ void Mod_LoadAliasModel (model_t *mod, void *buffer)
 	ptri = (mtriangle_t *)&pstverts[pmodel->numverts];
 	pintriangles = (dtriangle_t *)&pinstverts[pmodel->numverts];
 
-	pheader->triangles = (byte *)ptri - (byte *)pheader;
+	pheader->triangles = (uint8_t *)ptri - (uint8_t *)pheader;
 
 	for (i=0 ; i<pmodel->numtris ; i++)
 	{
@@ -1666,7 +1666,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 	mspriteframe_t		*pspriteframe;
 	int32_t					i, width, height, size, origin[2];
 	uint16_t		*ppixout;
-	byte				*ppixin;
+	uint8_t				*ppixin;
 
 	pinframe = (dspriteframe_t *)pin;
 
@@ -1692,11 +1692,11 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 
 	if (r_pixbytes == 1)
 	{
-		Q_memcpy (&pspriteframe->pixels[0], (byte *)(pinframe + 1), size);
+		Q_memcpy (&pspriteframe->pixels[0], (uint8_t *)(pinframe + 1), size);
 	}
 	else if (r_pixbytes == 2)
 	{
-		ppixin = (byte *)(pinframe + 1);
+		ppixin = (uint8_t *)(pinframe + 1);
 		ppixout = (uint16_t *)&pspriteframe->pixels[0];
 
 		for (i=0 ; i<size ; i++)
@@ -1708,7 +1708,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 				 r_pixbytes);
 	}
 
-	return (void *)((byte *)pinframe + sizeof (dspriteframe_t) + size);
+	return (void *)((uint8_t *)pinframe + sizeof (dspriteframe_t) + size);
 }
 
 

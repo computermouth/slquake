@@ -23,14 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int32_t			cache_full_cycle;
 
-byte *S_Alloc (int32_t size);
+uint8_t *S_Alloc (int32_t size);
 
 /*
 ================
 ResampleSfx
 ================
 */
-void ResampleSfx (sfx_t *sfx, int32_t inrate, int32_t inwidth, byte *data)
+void ResampleSfx (sfx_t *sfx, int32_t inrate, int32_t inwidth, uint8_t *data)
 {
 	int32_t		outcount;
 	int32_t		srcsample;
@@ -97,12 +97,12 @@ S_LoadSound
 sfxcache_t *S_LoadSound (sfx_t *s)
 {
     char	namebuffer[256];
-	byte	*data;
+	uint8_t	*data;
 	wavinfo_t	info;
 	int32_t		len;
 	float	stepscale;
 	sfxcache_t	*sc;
-	byte	stackbuf[1*1024];		// avoid dirtying the cache heap
+	uint8_t	stackbuf[1*1024];		// avoid dirtying the cache heap
 
 // see if still in memory
 	sc = Cache_Check (&s->cache);
@@ -162,11 +162,11 @@ WAV loading
 */
 
 
-byte	*data_p;
-byte 	*iff_end;
-byte 	*last_chunk;
-byte 	*iff_data;
-int32_t 	iff_chunk_len;
+uint8_t	*data_p;
+uint8_t	*iff_end;
+uint8_t	*last_chunk;
+uint8_t	*iff_data;
+int32_t	iff_chunk_len;
 
 
 int16_t GetLittleShort(void)
@@ -245,7 +245,7 @@ void DumpChunks(void)
 GetWavinfo
 ============
 */
-wavinfo_t GetWavinfo (char *name, byte *wav, int32_t wavlength)
+wavinfo_t GetWavinfo (char *name, uint8_t *wav, int32_t wavlength)
 {
 	wavinfo_t	info;
 	int32_t     i;

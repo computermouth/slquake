@@ -44,7 +44,7 @@ typedef struct
 	int32_t 	speed;
 	int32_t 	width;
 	int32_t 	stereo;
-	byte	data[1];		// variable sized
+	uint8_t	data[1];		// variable sized
 } sfxcache_t;
 
 typedef struct
@@ -163,7 +163,7 @@ extern int32_t		snd_blocked;
 void S_LocalSound (char *s);
 sfxcache_t *S_LoadSound (sfx_t *s);
 
-wavinfo_t GetWavinfo (char *name, byte *wav, int32_t wavlength);
+wavinfo_t GetWavinfo (char *name, uint8_t *wav, int32_t wavlength);
 
 void SND_InitScaletable (void);
 void SNDDMA_Submit(void);

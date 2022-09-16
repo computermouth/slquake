@@ -15,7 +15,7 @@ uint16_t  d_8to16table[256];
 qboolean mouse_avail;
 
 int32_t    VGA_width, VGA_height, VGA_rowbytes, VGA_bufferrowbytes = 0;
-byte    *VGA_pagebase;
+uint8_t    *VGA_pagebase;
 
 static SDL_Surface *screen = NULL;
 
@@ -44,7 +44,7 @@ void    VID_ShiftPalette (uint8_t *palette)
 void    VID_Init (uint8_t *palette)
 {
     int32_t pnum, chunk;
-    byte *cache;    int32_t cachesize;
+    uint8_t *cache;    int32_t cachesize;
     uint32_t flags;
 
     // Load the SDL library
@@ -117,7 +117,7 @@ void    VID_Init (uint8_t *palette)
         Sys_Error ("Not enough memory for video mode\n");
 
     // initialize the cache memory 
-        cache = (byte *) d_pzbuffer
+        cache = (uint8_t *) d_pzbuffer
                 + vid.width * vid.height * sizeof (*d_pzbuffer);
     D_InitCaches (cache, cachesize);
 
@@ -163,7 +163,7 @@ void    VID_Update (vrect_t *rects)
 D_BeginDirectRect
 ================
 */
-void D_BeginDirectRect (int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height)
+void D_BeginDirectRect (int32_t x, int32_t y, uint8_t *pbitmap, int32_t width, int32_t height)
 {
     uint8_t *offset;
 

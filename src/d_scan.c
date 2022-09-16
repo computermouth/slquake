@@ -45,11 +45,11 @@ void D_WarpScreen (void)
 {
 	int32_t		w, h;
 	int32_t		u,v;
-	byte	*dest;
+	uint8_t	*dest;
 	int32_t		*turb;
 	int32_t		*col;
-	byte	**row;
-	byte	*rowptr[MAXHEIGHT+(AMP2*2)];
+	uint8_t	**row;
+	uint8_t	*rowptr[MAXHEIGHT+(AMP2*2)];
 	int32_t		column[MAXWIDTH+(AMP2*2)];
 	float	wratio, hratio;
 
@@ -133,7 +133,7 @@ void Turbulent8 (espan_t *pspan)
 
 	do
 	{
-		r_turb_pdest = (uint8_t *)((byte *)d_viewbuffer +
+		r_turb_pdest = (uint8_t *)((uint8_t *)d_viewbuffer +
 				(screenwidth * pspan->v) + pspan->u);
 
 		count = pspan->count;
@@ -264,7 +264,7 @@ void D_DrawSpans8 (espan_t *pspan)
 
 	do
 	{
-		pdest = (uint8_t *)((byte *)d_viewbuffer +
+		pdest = (uint8_t *)((uint8_t *)d_viewbuffer +
 				(screenwidth * pspan->v) + pspan->u);
 
 		count = pspan->count;

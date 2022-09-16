@@ -63,7 +63,7 @@ struct
 {
 	uint32_t	length;
 	uint32_t	sequence;
-	byte			data[MAX_DATAGRAM];
+	uint8_t			data[MAX_DATAGRAM];
 } packetBuffer;
 
 extern int32_t m_return_state;
@@ -76,7 +76,7 @@ extern char m_return_reason[32];
 char *StrAddr (struct qsockaddr *addr)
 {
 	static char buf[34];
-	byte *p = (byte *)addr;
+	uint8_t *p = (uint8_t *)addr;
 	int32_t n;
 
 	for (n = 0; n < 16; n++)
@@ -180,7 +180,7 @@ int32_t Datagram_SendMessage (qsocket_t *sock, sizebuf_t *data)
 
 	sock->canSend = false;
 
-	if (sfunc.Write (sock->socket, (byte *)&packetBuffer, packetLen, &sock->addr) == -1)
+	if (sfunc.Write (sock->socket, (uint8_t *)&packetBuffer, packetLen, &sock->addr) == -1)
 		return -1;
 
 	sock->lastSendTime = net_time;
@@ -213,7 +213,7 @@ int32_t SendMessageNext (qsocket_t *sock)
 
 	sock->sendNext = false;
 
-	if (sfunc.Write (sock->socket, (byte *)&packetBuffer, packetLen, &sock->addr) == -1)
+	if (sfunc.Write (sock->socket, (uint8_t *)&packetBuffer, packetLen, &sock->addr) == -1)
 		return -1;
 
 	sock->lastSendTime = net_time;
@@ -246,7 +246,7 @@ int32_t ReSendMessage (qsocket_t *sock)
 
 	sock->sendNext = false;
 
-	if (sfunc.Write (sock->socket, (byte *)&packetBuffer, packetLen, &sock->addr) == -1)
+	if (sfunc.Write (sock->socket, (uint8_t *)&packetBuffer, packetLen, &sock->addr) == -1)
 		return -1;
 
 	sock->lastSendTime = net_time;
@@ -288,7 +288,7 @@ int32_t Datagram_SendUnreliableMessage (qsocket_t *sock, sizebuf_t *data)
 	packetBuffer.sequence = BigLong(sock->unreliableSendSequence++);
 	Q_memcpy (packetBuffer.data, data->data, data->cursize);
 
-	if (sfunc.Write (sock->socket, (byte *)&packetBuffer, packetLen, &sock->addr) == -1)
+	if (sfunc.Write (sock->socket, (uint8_t *)&packetBuffer, packetLen, &sock->addr) == -1)
 		return -1;
 
 	packetsSent++;
@@ -311,7 +311,7 @@ int32_t	Datagram_GetMessage (qsocket_t *sock)
 
 	while(1)
 	{	
-		length = sfunc.Read (sock->socket, (byte *)&packetBuffer, NET_DATAGRAMSIZE, &readaddr);
+		length = sfunc.Read (sock->socket, (uint8_t *)&packetBuffer, NET_DATAGRAMSIZE, &readaddr);
 
 //	if ((rand() & 255) > 220)
 //		continue;
@@ -412,7 +412,7 @@ int32_t	Datagram_GetMessage (qsocket_t *sock)
 		{
 			packetBuffer.length = BigLong(NET_HEADERSIZE | NETFLAG_ACK);
 			packetBuffer.sequence = BigLong(sequence);
-			sfunc.Write (sock->socket, (byte *)&packetBuffer, NET_HEADERSIZE, &readaddr);
+			sfunc.Write (sock->socket, (uint8_t *)&packetBuffer, NET_HEADERSIZE, &readaddr);
 
 			if (sequence != sock->receiveSequence)
 			{

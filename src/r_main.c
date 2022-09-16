@@ -47,9 +47,9 @@ int32_t			r_maxsurfsseen, r_maxedgesseen, r_cnumsurfs;
 qboolean	r_surfsonstack;
 int32_t			r_clipflags;
 
-byte		*r_warpbuffer;
+uint8_t		*r_warpbuffer;
 
-byte		*r_stack_start;
+uint8_t		*r_stack_start;
 
 //
 // view origin
@@ -141,7 +141,7 @@ R_InitTextures
 void	R_InitTextures (void)
 {
 	int32_t		x,y, m;
-	byte	*dest;
+	uint8_t	*dest;
 	
 // create a simple checkerboard texture for the default
 	r_notexture_mip = Hunk_AllocName (sizeof(texture_t) + 16*16+8*8+4*4+2*2, "notexture");
@@ -154,7 +154,7 @@ void	R_InitTextures (void)
 	
 	for (m=0 ; m<4 ; m++)
 	{
-		dest = (byte *)r_notexture_mip + r_notexture_mip->offsets[m];
+		dest = (uint8_t *)r_notexture_mip + r_notexture_mip->offsets[m];
 		for (y=0 ; y< (16>>m) ; y++)
 			for (x=0 ; x< (16>>m) ; x++)
 			{
@@ -176,7 +176,7 @@ void R_Init (void)
 	int32_t		dummy;
 	
 // get stack position so we can guess if we are going to overflow
-	r_stack_start = (byte *)&dummy;
+	r_stack_start = (uint8_t *)&dummy;
 	
 	R_InitTurb ();
 	
@@ -448,7 +448,7 @@ R_MarkLeaves
 */
 void R_MarkLeaves (void)
 {
-	byte	*vis;
+	uint8_t	*vis;
 	mnode_t	*node;
 	int32_t		i;
 
@@ -905,7 +905,7 @@ r_refdef must be set before the first call
 */
 void R_RenderView_ (void)
 {
-	byte	warpbuffer[vid.width * vid.height];
+	uint8_t	warpbuffer[vid.width * vid.height];
 
 	r_warpbuffer = warpbuffer;
 
@@ -996,7 +996,7 @@ void R_RenderView (void)
 	int32_t		dummy;
 	int32_t		delta;
 	
-	delta = (byte *)&dummy - r_stack_start;
+	delta = (uint8_t *)&dummy - r_stack_start;
 	if (delta < -10000 || delta > 10000)
 		Sys_Error ("R_RenderView: called without enough stack");
 
