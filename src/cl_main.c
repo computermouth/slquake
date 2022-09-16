@@ -51,7 +51,7 @@ entity_t		cl_static_entities[MAX_STATIC_ENTITIES];
 lightstyle_t	cl_lightstyle[MAX_LIGHTSTYLES];
 dlight_t		cl_dlights[MAX_DLIGHTS];
 
-int				cl_numvisedicts;
+int32_t				cl_numvisedicts;
 entity_t		*cl_visedicts[MAX_VISEDICTS];
 
 /*
@@ -62,7 +62,7 @@ CL_ClearState
 */
 void CL_ClearState (void)
 {
-	int			i;
+	int32_t			i;
 
 	if (!sv.active)
 		Host_ClearMemory ();
@@ -191,7 +191,7 @@ Con_DPrintf ("CL_SignonReply: %i\n", cls.signon);
 		MSG_WriteString (&cls.message, va("name \"%s\"\n", cl_name.string));
 	
 		MSG_WriteByte (&cls.message, clc_stringcmd);
-		MSG_WriteString (&cls.message, va("color %i %i\n", ((int)cl_color.value)>>4, ((int)cl_color.value)&15));
+		MSG_WriteString (&cls.message, va("color %i %i\n", ((int32_t)cl_color.value)>>4, ((int32_t)cl_color.value)&15));
 	
 		MSG_WriteByte (&cls.message, clc_stringcmd);
 		sprintf (str, "spawn %s", cls.spawnparms);
@@ -250,7 +250,7 @@ CL_PrintEntities_f
 void CL_PrintEntities_f (void)
 {
 	entity_t	*ent;
-	int			i;
+	int32_t			i;
 	
 	for (i=0,ent=cl_entities ; i<cl.num_entities ; i++,ent++)
 	{
@@ -271,9 +271,9 @@ CL_AllocDlight
 
 ===============
 */
-dlight_t *CL_AllocDlight (int key)
+dlight_t *CL_AllocDlight (int32_t key)
 {
-	int		i;
+	int32_t		i;
 	dlight_t	*dl;
 
 // first look for an exact key match
@@ -318,7 +318,7 @@ CL_DecayLights
 */
 void CL_DecayLights (void)
 {
-	int			i;
+	int32_t			i;
 	dlight_t	*dl;
 	float		time;
 	
@@ -394,7 +394,7 @@ CL_RelinkEntities
 void CL_RelinkEntities (void)
 {
 	entity_t	*ent;
-	int			i, j;
+	int32_t			i, j;
 	float		frac, f, d;
 	vec3_t		delta;
 	float		bobjrotate;
@@ -559,9 +559,9 @@ CL_ReadFromServer
 Read all incoming data from the server
 ===============
 */
-int CL_ReadFromServer (void)
+int32_t CL_ReadFromServer (void)
 {
-	int		ret;
+	int32_t		ret;
 
 	cl.oldtime = cl.time;
 	cl.time += host_frametime;

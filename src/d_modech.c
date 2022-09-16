@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "quakedef.h"
 #include "d_local.h"
 
-int	d_vrectx, d_vrecty, d_vrectright_particle, d_vrectbottom_particle;
+int32_t	d_vrectx, d_vrecty, d_vrectright_particle, d_vrectbottom_particle;
 
-int	d_y_aspect_shift, d_pix_min, d_pix_max, d_pix_shift;
+int32_t	d_y_aspect_shift, d_pix_min, d_pix_max, d_pix_shift;
 
-int		d_scantable[MAXHEIGHT];
+int32_t		d_scantable[MAXHEIGHT];
 short	*zspantable[MAXHEIGHT];
 
 /*
@@ -36,7 +36,7 @@ D_ViewChanged
 */
 void D_ViewChanged (void)
 {
-	int rowbytes;
+	int32_t rowbytes;
 
 	rowbytes = vid.rowbytes;
 
@@ -51,8 +51,8 @@ void D_ViewChanged (void)
 	if (d_pix_min < 1)
 		d_pix_min = 1;
 
-	d_pix_max = (int)((float)r_refdef.vrect.width / (320.0 / 4.0) + 0.5);
-	d_pix_shift = 8 - (int)((float)r_refdef.vrect.width / 320.0 + 0.5);
+	d_pix_max = (int32_t)((float)r_refdef.vrect.width / (320.0 / 4.0) + 0.5);
+	d_pix_shift = 8 - (int32_t)((float)r_refdef.vrect.width / 320.0 + 0.5);
 	if (d_pix_max < 1)
 		d_pix_max = 1;
 
@@ -68,7 +68,7 @@ void D_ViewChanged (void)
 			r_refdef.vrectbottom - (d_pix_max << d_y_aspect_shift);
 
 	{
-		int		i;
+		int32_t		i;
 
 		for (i=0 ; i<vid.height; i++)
 		{

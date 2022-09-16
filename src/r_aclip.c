@@ -95,7 +95,7 @@ void R_Alias_clip_z (finalvert_t *pfv0, finalvert_t *pfv1, finalvert_t *out)
 void R_Alias_clip_left (finalvert_t *pfv0, finalvert_t *pfv1, finalvert_t *out)
 {
 	float		scale;
-	int			i;
+	int32_t			i;
 
 	if (pfv0->v[1] >= pfv1->v[1])
 	{
@@ -118,7 +118,7 @@ void R_Alias_clip_right (finalvert_t *pfv0, finalvert_t *pfv1,
 	finalvert_t *out)
 {
 	float		scale;
-	int			i;
+	int32_t			i;
 
 	if (pfv0->v[1] >= pfv1->v[1])
 	{
@@ -140,7 +140,7 @@ void R_Alias_clip_right (finalvert_t *pfv0, finalvert_t *pfv1,
 void R_Alias_clip_top (finalvert_t *pfv0, finalvert_t *pfv1, finalvert_t *out)
 {
 	float		scale;
-	int			i;
+	int32_t			i;
 
 	if (pfv0->v[1] >= pfv1->v[1])
 	{
@@ -163,7 +163,7 @@ void R_Alias_clip_bottom (finalvert_t *pfv0, finalvert_t *pfv1,
 	finalvert_t *out)
 {
 	float		scale;
-	int			i;
+	int32_t			i;
 
 	if (pfv0->v[1] >= pfv1->v[1])
 	{
@@ -183,11 +183,11 @@ void R_Alias_clip_bottom (finalvert_t *pfv0, finalvert_t *pfv1,
 	}
 }
 
-int R_AliasClip (finalvert_t *in, finalvert_t *out, int flag, int count,
+int32_t R_AliasClip (finalvert_t *in, finalvert_t *out, int32_t flag, int32_t count,
 	void(*clip)(finalvert_t *pfv0, finalvert_t *pfv1, finalvert_t *out) )
 {
-	int			i,j,k;
-	int			flags, oldflags;
+	int32_t			i,j,k;
+	int32_t			flags, oldflags;
 	
 	j = count-1;
 	k = 0;
@@ -230,7 +230,7 @@ R_AliasClipTriangle
 */
 void R_AliasClipTriangle (mtriangle_t *ptri)
 {
-	int				i, k, pingpong;
+	int32_t				i, k, pingpong;
 	mtriangle_t		mtri;
 	unsigned		clipflags;
 

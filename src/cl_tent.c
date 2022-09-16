@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "quakedef.h"
 
-int			num_temp_entities;
+int32_t			num_temp_entities;
 entity_t	cl_temp_entities[MAX_TEMP_ENTITIES];
 beam_t		cl_beams[MAX_BEAMS];
 
@@ -56,10 +56,10 @@ CL_ParseBeam
 */
 void CL_ParseBeam (model_t *m)
 {
-	int		ent;
+	int32_t	ent;
 	vec3_t	start, end;
 	beam_t	*b;
-	int		i;
+	int32_t	i;
 	
 	ent = MSG_ReadShort ();
 	
@@ -106,11 +106,11 @@ CL_ParseTEnt
 */
 void CL_ParseTEnt (void)
 {
-	int		type;
-	vec3_t	pos;
+	int32_t		type;
+	vec3_t		pos;
 	dlight_t	*dl;
-	int		rnd;
-	int		colorStart, colorLength;
+	int32_t		rnd;
+	int32_t		colorStart, colorLength;
 
 	type = MSG_ReadByte ();
 	switch (type)
@@ -284,7 +284,7 @@ CL_UpdateTEnts
 */
 void CL_UpdateTEnts (void)
 {
-	int			i;
+	int32_t		i;
 	beam_t		*b;
 	vec3_t		dist, org;
 	float		d;
@@ -319,12 +319,12 @@ void CL_UpdateTEnts (void)
 		}
 		else
 		{
-			yaw = (int) (atan2(dist[1], dist[0]) * 180 / M_PI);
+			yaw = (int32_t) (atan2(dist[1], dist[0]) * 180 / M_PI);
 			if (yaw < 0)
 				yaw += 360;
 	
 			forward = sqrt (dist[0]*dist[0] + dist[1]*dist[1]);
-			pitch = (int) (atan2(dist[2], forward) * 180 / M_PI);
+			pitch = (int32_t) (atan2(dist[2], forward) * 180 / M_PI);
 			if (pitch < 0)
 				pitch += 360;
 		}

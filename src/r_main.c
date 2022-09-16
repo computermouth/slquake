@@ -26,26 +26,26 @@ void		*colormap;
 vec3_t		viewlightvec;
 alight_t	r_viewlighting = {128, 192, viewlightvec};
 float		r_time1;
-int			r_numallocatededges;
+int32_t			r_numallocatededges;
 qboolean	r_drawpolys;
 qboolean	r_drawculledpolys;
 qboolean	r_worldpolysbacktofront;
 qboolean	r_recursiveaffinetriangles = true;
-int			r_pixbytes = 1;
+int32_t			r_pixbytes = 1;
 float		r_aliasuvscale = 1.0;
-int			r_outofsurfaces;
-int			r_outofedges;
+int32_t			r_outofsurfaces;
+int32_t			r_outofedges;
 
 qboolean	r_dowarp, r_dowarpold, r_viewchanged;
 
-int			numbtofpolys;
+int32_t			numbtofpolys;
 btofpoly_t	*pbtofpolys;
 mvertex_t	*r_pcurrentvertbase;
 
-int			c_surf;
-int			r_maxsurfsseen, r_maxedgesseen, r_cnumsurfs;
+int32_t			c_surf;
+int32_t			r_maxsurfsseen, r_maxedgesseen, r_cnumsurfs;
 qboolean	r_surfsonstack;
-int			r_clipflags;
+int32_t			r_clipflags;
 
 byte		*r_warpbuffer;
 
@@ -79,21 +79,21 @@ mplane_t	screenedge[4];
 //
 // refresh flags
 //
-int		r_framecount = 1;	// so frame counts initialized to 0 don't match
-int		r_visframecount;
-int		d_spanpixcount;
-int		r_polycount;
-int		r_drawnpolycount;
-int		r_wholepolycount;
+int32_t		r_framecount = 1;	// so frame counts initialized to 0 don't match
+int32_t		r_visframecount;
+int32_t		d_spanpixcount;
+int32_t		r_polycount;
+int32_t		r_drawnpolycount;
+int32_t		r_wholepolycount;
 
 #define		VIEWMODNAME_LENGTH	256
 char		viewmodname[VIEWMODNAME_LENGTH+1];
-int			modcount;
+int32_t			modcount;
 
-int			*pfrustum_indexes[4];
-int			r_frustum_indexes[4*6];
+int32_t			*pfrustum_indexes[4];
+int32_t			r_frustum_indexes[4*6];
 
-int		reinit_surfcache = 1;	// if 1, surface cache is currently empty and
+int32_t		reinit_surfcache = 1;	// if 1, surface cache is currently empty and
 								// must be reinitialized for current cache size
 
 mleaf_t		*r_viewleaf, *r_oldviewleaf;
@@ -102,7 +102,7 @@ texture_t	*r_notexture_mip;
 
 float		r_aliastransition, r_resfudge;
 
-int		d_lightstylevalue[256];	// 8.8 fraction of base light value
+int32_t		d_lightstylevalue[256];	// 8.8 fraction of base light value
 
 float	dp_time1, dp_time2, db_time1, db_time2, rw_time1, rw_time2;
 float	se_time1, se_time2, de_time1, de_time2, dv_time1, dv_time2;
@@ -140,7 +140,7 @@ R_InitTextures
 */
 void	R_InitTextures (void)
 {
-	int		x,y, m;
+	int32_t		x,y, m;
 	byte	*dest;
 	
 // create a simple checkerboard texture for the default
@@ -173,7 +173,7 @@ R_Init
 */
 void R_Init (void)
 {
-	int		dummy;
+	int32_t		dummy;
 	
 // get stack position so we can guess if we are going to overflow
 	r_stack_start = (byte *)&dummy;
@@ -230,7 +230,7 @@ R_NewMap
 */
 void R_NewMap (void)
 {
-	int		i;
+	int32_t		i;
 	
 // clear out efrags in case the level hasn't been reloaded
 // FIXME: is this one short?
@@ -288,9 +288,9 @@ void R_NewMap (void)
 R_SetVrect
 ===============
 */
-void R_SetVrect (vrect_t *pvrectin, vrect_t *pvrect, int lineadj)
+void R_SetVrect (vrect_t *pvrectin, vrect_t *pvrect, int32_t lineadj)
 {
-	int		h;
+	int32_t		h;
 	float	size;
 
 	size = scr_viewsize.value > 100 ? 100 : scr_viewsize.value;
@@ -336,9 +336,9 @@ Called every time the vid structure or r_refdef changes.
 Guaranteed to be called before the first refresh
 ===============
 */
-void R_ViewChanged (vrect_t *pvrect, int lineadj, float aspect)
+void R_ViewChanged (vrect_t *pvrect, int32_t lineadj, float aspect)
 {
-	int		i;
+	int32_t		i;
 	float	res_scale;
 
 	r_viewchanged = true;
@@ -360,10 +360,10 @@ void R_ViewChanged (vrect_t *pvrect, int lineadj, float aspect)
 	r_refdef.fvrectbottom = (float)r_refdef.vrectbottom;
 	r_refdef.fvrectbottom_adj = (float)r_refdef.vrectbottom - 0.5;
 
-	r_refdef.aliasvrect.x = (int)(r_refdef.vrect.x * r_aliasuvscale);
-	r_refdef.aliasvrect.y = (int)(r_refdef.vrect.y * r_aliasuvscale);
-	r_refdef.aliasvrect.width = (int)(r_refdef.vrect.width * r_aliasuvscale);
-	r_refdef.aliasvrect.height = (int)(r_refdef.vrect.height * r_aliasuvscale);
+	r_refdef.aliasvrect.x = (int32_t)(r_refdef.vrect.x * r_aliasuvscale);
+	r_refdef.aliasvrect.y = (int32_t)(r_refdef.vrect.y * r_aliasuvscale);
+	r_refdef.aliasvrect.width = (int32_t)(r_refdef.vrect.width * r_aliasuvscale);
+	r_refdef.aliasvrect.height = (int32_t)(r_refdef.vrect.height * r_aliasuvscale);
 	r_refdef.aliasvrectright = r_refdef.aliasvrect.x +
 			r_refdef.aliasvrect.width;
 	r_refdef.aliasvrectbottom = r_refdef.aliasvrect.y +
@@ -450,7 +450,7 @@ void R_MarkLeaves (void)
 {
 	byte	*vis;
 	mnode_t	*node;
-	int		i;
+	int32_t		i;
 
 	if (r_oldviewleaf == r_viewleaf)
 		return;
@@ -484,8 +484,8 @@ R_DrawEntitiesOnList
 */
 void R_DrawEntitiesOnList (void)
 {
-	int			i, j;
-	int			lnum;
+	int32_t			i, j;
+	int32_t			lnum;
 	alight_t	lighting;
 // FIXME: remove and do real lighting
 	float		lightvec[3] = {-1, 0, 0};
@@ -565,8 +565,8 @@ void R_DrawViewModel (void)
 {
 // FIXME: remove and do real lighting
 	float		lightvec[3] = {-1, 0, 0};
-	int			j;
-	int			lnum;
+	int32_t			j;
+	int32_t			lnum;
 	vec3_t		dist;
 	float		add;
 	dlight_t	*dl;
@@ -631,9 +631,9 @@ void R_DrawViewModel (void)
 R_BmodelCheckBBox
 =============
 */
-int R_BmodelCheckBBox (model_t *clmodel, float *minmaxs)
+int32_t R_BmodelCheckBBox (model_t *clmodel, float *minmaxs)
 {
-	int			i, *pindex, clipflags;
+	int32_t			i, *pindex, clipflags;
 	vec3_t		acceptpt, rejectpt;
 	double		d;
 
@@ -697,7 +697,7 @@ R_DrawBEntitiesOnList
 */
 void R_DrawBEntitiesOnList (void)
 {
-	int			i, j, k, clipflags;
+	int32_t			i, j, k, clipflags;
 	vec3_t		oldorigin;
 	model_t		*clmodel;
 	float		minmaxs[6];
@@ -993,8 +993,8 @@ void R_RenderView_ (void)
 
 void R_RenderView (void)
 {
-	int		dummy;
-	int		delta;
+	int32_t		dummy;
+	int32_t		delta;
 	
 	delta = (byte *)&dummy - r_stack_start;
 	if (delta < -10000 || delta > 10000)
@@ -1019,7 +1019,7 @@ R_InitTurb
 */
 void R_InitTurb (void)
 {
-	int		i;
+	int32_t		i;
 	
 	for (i=0 ; i<(SIN_BUFFER_SIZE) ; i++)
 	{

@@ -5,14 +5,14 @@
 #include "quakedef.h"
 
 static dma_t the_shm;
-static int snd_inited;
+static int32_t snd_inited;
 
-extern int desired_speed;
-extern int desired_bits;
+extern int32_t desired_speed;
+extern int32_t desired_bits;
 extern cvar_t nosound;
 extern qboolean sound_started;
 
-static void paint_audio(void *unused, Uint8 *stream, int len)
+static void paint_audio(void *unused, Uint8 *stream, int32_t len)
 {
 	if ( shm ) {
 		shm->buffer = stream;
@@ -46,7 +46,7 @@ static void Snd_Restart_f(void)
 
 qboolean SNDDMA_Init(void)
 {
-	static int retval;
+	static int32_t retval;
 	SDL_AudioSpec desired, obtained;
 
 	snd_inited = 0;
@@ -128,7 +128,7 @@ qboolean SNDDMA_Init(void)
 	return 1;
 }
 
-int SNDDMA_GetDMAPos(void)
+int32_t SNDDMA_GetDMAPos(void)
 {
 	return shm->samplepos;
 }

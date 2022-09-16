@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FULLY_CLIPPED_CACHED		0x80000000
 #define FRAMECOUNT_MASK			0x7FFFFFFF
 
-unsigned int	cacheoffset;
+uint32_t	cacheoffset;
 
-int			c_faceclip;					// number of faces clipped
+int32_t			c_faceclip;					// number of faces clipped
 
 zpointdesc_t	r_zpointdesc;
 
@@ -49,8 +49,8 @@ qboolean		r_leftclipped, r_rightclipped;
 static qboolean	makeleftedge, makerightedge;
 qboolean		r_nearzionly;
 
-int		sintable[SIN_BUFFER_SIZE];
-int		intsintable[SIN_BUFFER_SIZE];
+int32_t		sintable[SIN_BUFFER_SIZE];
+int32_t		intsintable[SIN_BUFFER_SIZE];
 
 mvertex_t	r_leftenter, r_leftexit;
 mvertex_t	r_rightenter, r_rightexit;
@@ -58,13 +58,13 @@ mvertex_t	r_rightenter, r_rightexit;
 typedef struct
 {
 	float	u,v;
-	int		ceilv;
+	int32_t		ceilv;
 } evert_t;
 
-int				r_emitted;
+int32_t				r_emitted;
 float			r_nearzi;
 float			r_u1, r_v1, r_lzi1;
-int				r_ceilv1;
+int32_t				r_ceilv1;
 
 qboolean	r_lastvertvalid;
 
@@ -77,13 +77,13 @@ R_EmitEdge
 void R_EmitEdge (mvertex_t *pv0, mvertex_t *pv1)
 {
 	edge_t	*edge, *pcheck;
-	int		u_check;
+	int32_t		u_check;
 	float	u, u_step;
 	vec3_t	local, transformed;
 	float	*world;
-	int		v, v2, ceilv0;
+	int32_t		v, v2, ceilv0;
 	float	scale, lzi0, u0, v0;
-	int		side;
+	int32_t		side;
 
 	if (r_lastvertvalid)
 	{
@@ -120,7 +120,7 @@ void R_EmitEdge (mvertex_t *pv0, mvertex_t *pv1)
 		if (v0 > r_refdef.fvrectbottom_adj)
 			v0 = r_refdef.fvrectbottom_adj;
 	
-		ceilv0 = (int) ceil(v0);
+		ceilv0 = (int32_t) ceil(v0);
 	}
 
 	world = &pv1->position[0];
@@ -160,7 +160,7 @@ void R_EmitEdge (mvertex_t *pv0, mvertex_t *pv1)
 
 	r_emitted = 1;
 
-	r_ceilv1 = (int) ceil(r_v1);
+	r_ceilv1 = (int32_t) ceil(r_v1);
 
 
 // create the edge
@@ -377,9 +377,9 @@ void R_EmitCachedEdge (void)
 R_RenderFace
 ================
 */
-void R_RenderFace (msurface_t *fa, int clipflags)
+void R_RenderFace (msurface_t *fa, int32_t clipflags)
 {
-	int			i, lindex;
+	int32_t			i, lindex;
 	unsigned	mask;
 	mplane_t	*pplane;
 	float		distinv;
@@ -577,7 +577,7 @@ R_RenderBmodelFace
 */
 void R_RenderBmodelFace (bedge_t *pedges, msurface_t *psurf)
 {
-	int			i;
+	int32_t			i;
 	unsigned	mask;
 	mplane_t	*pplane;
 	float		distinv;
@@ -690,9 +690,9 @@ void R_RenderBmodelFace (bedge_t *pedges, msurface_t *psurf)
 R_RenderPoly
 ================
 */
-void R_RenderPoly (msurface_t *fa, int clipflags)
+void R_RenderPoly (msurface_t *fa, int32_t clipflags)
 {
-	int			i, lindex, lnumverts, s_axis, t_axis;
+	int32_t			i, lindex, lnumverts, s_axis, t_axis;
 	float		dist, lastdist, lzi, scale, u, v, frac;
 	unsigned	mask;
 	vec3_t		local, transformed;
@@ -701,7 +701,7 @@ void R_RenderPoly (msurface_t *fa, int clipflags)
 	mplane_t	*pplane;
 	mvertex_t	verts[2][100];	//FIXME: do real number
 	polyvert_t	pverts[100];	//FIXME: do real number, safely
-	int			vertpage, newverts, newpage, lastvert;
+	int32_t			vertpage, newverts, newpage, lastvert;
 	qboolean	visible;
 
 // FIXME: clean this up and make it faster
@@ -875,7 +875,7 @@ R_ZDrawSubmodelPolys
 */
 void R_ZDrawSubmodelPolys (model_t *pmodel)
 {
-	int			i, numsurfaces;
+	int32_t			i, numsurfaces;
 	msurface_t	*psurf;
 	float		dot;
 	mplane_t	*pplane;

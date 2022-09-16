@@ -5,10 +5,10 @@
 #define __PROGDEFS_H__
 
 typedef struct
-{	int	pad[28];
-	int	self;
-	int	other;
-	int	world;
+{	int32_t	pad[28];
+	int32_t	self;
+	int32_t	other;
+	int32_t	world;
 	float	time;
 	float	frametime;
 	float	force_retouch;
@@ -46,10 +46,10 @@ typedef struct
 	vec3_t	trace_endpos;
 	vec3_t	trace_plane_normal;
 	float	trace_plane_dist;
-	int	trace_ent;
+	int32_t	trace_ent;
 	float	trace_inopen;
 	float	trace_inwater;
-	int	msg_entity;
+	int32_t	msg_entity;
 	func_t	main;
 	func_t	StartFrame;
 	func_t	PlayerPreThink;
@@ -89,7 +89,7 @@ typedef struct
 	func_t	think;
 	func_t	blocked;
 	float	nextthink;
-	int	groundentity;
+	int32_t	groundentity;
 	float	health;
 	float	frags;
 	float	weapon;
@@ -102,7 +102,7 @@ typedef struct
 	float	ammo_cells;
 	float	items;
 	float	takedamage;
-	int	chain;
+	int32_t	chain;
 	float	deadflag;
 	vec3_t	view_ofs;
 	float	button0;
@@ -113,7 +113,7 @@ typedef struct
 	vec3_t	v_angle;
 	float	idealpitch;
 	string_t	netname;
-	int	enemy;
+	int32_t	enemy;
 	float	flags;
 	float	colormap;
 	float	team;
@@ -125,15 +125,15 @@ typedef struct
 	float	watertype;
 	float	ideal_yaw;
 	float	yaw_speed;
-	int	aiment;
-	int	goalentity;
+	int32_t	aiment;
+	int32_t	goalentity;
 	float	spawnflags;
 	string_t	target;
 	string_t	targetname;
 	float	dmg_take;
 	float	dmg_save;
-	int	dmg_inflictor;
-	int	owner;
+	int32_t	dmg_inflictor;
+	int32_t	owner;
 	vec3_t	movedir;
 	string_t	message;
 	float	sounds;

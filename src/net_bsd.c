@@ -59,7 +59,7 @@ net_driver_t net_drivers[MAX_NET_DRIVERS] =
 	}
 };
 
-int net_numdrivers = 2;
+int32_t net_numdrivers = 2;
 
 #include "net_udp.h"
 
@@ -90,4 +90,4 @@ net_landriver_t	net_landrivers[MAX_NET_DRIVERS] =
 	}
 };
 
-int net_numlandrivers = 1;
+int32_t net_numlandrivers = 1;

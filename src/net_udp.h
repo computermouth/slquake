@@ -22,23 +22,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __NET_UDP_H__
 #define __NET_UDP_H__
 
-int  UDP_Init (void);
+int32_t  UDP_Init (void);
 void UDP_Shutdown (void);
 void UDP_Listen (qboolean state);
-int  UDP_OpenSocket (int port);
-int  UDP_CloseSocket (int socket);
-int  UDP_Connect (int socket, struct qsockaddr *addr);
-int  UDP_CheckNewConnections (void);
-int  UDP_Read (int socket, byte *buf, int len, struct qsockaddr *addr);
-int  UDP_Write (int socket, byte *buf, int len, struct qsockaddr *addr);
-int  UDP_Broadcast (int socket, byte *buf, int len);
+int32_t  UDP_OpenSocket (int32_t port);
+int32_t  UDP_CloseSocket (int32_t socket);
+int32_t  UDP_Connect (int32_t socket, struct qsockaddr *addr);
+int32_t  UDP_CheckNewConnections (void);
+int32_t  UDP_Read (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
+int32_t  UDP_Write (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr);
+int32_t  UDP_Broadcast (int32_t socket, byte *buf, int32_t len);
 char *UDP_AddrToString (struct qsockaddr *addr);
-int  UDP_StringToAddr (char *string, struct qsockaddr *addr);
-int  UDP_GetSocketAddr (int socket, struct qsockaddr *addr);
-int  UDP_GetNameFromAddr (struct qsockaddr *addr, char *name);
-int  UDP_GetAddrFromName (char *name, struct qsockaddr *addr);
-int  UDP_AddrCompare (struct qsockaddr *addr1, struct qsockaddr *addr2);
-int  UDP_GetSocketPort (struct qsockaddr *addr);
-int  UDP_SetSocketPort (struct qsockaddr *addr, int port);
+int32_t  UDP_StringToAddr (char *string, struct qsockaddr *addr);
+int32_t  UDP_GetSocketAddr (int32_t socket, struct qsockaddr *addr);
+int32_t  UDP_GetNameFromAddr (struct qsockaddr *addr, char *name);
+int32_t  UDP_GetAddrFromName (char *name, struct qsockaddr *addr);
+int32_t  UDP_AddrCompare (struct qsockaddr *addr1, struct qsockaddr *addr2);
+int32_t  UDP_GetSocketPort (struct qsockaddr *addr);
+int32_t  UDP_SetSocketPort (struct qsockaddr *addr, int32_t port);
 
 #endif

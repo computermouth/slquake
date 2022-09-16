@@ -41,13 +41,13 @@ double		host_frametime;
 double		host_time;
 double		realtime;				// without any filtering or bounding
 double		oldrealtime;			// last frame run
-int			host_framecount;
+int32_t			host_framecount;
 
-int			host_hunklevel;
+int32_t			host_hunklevel;
 
-int			minimum_memory;
+int32_t			minimum_memory;
 
-int		fps_count;
+int32_t		fps_count;
 
 client_t	*host_client;			// current client
 
@@ -158,7 +158,7 @@ Host_FindMaxClients
 */
 void	Host_FindMaxClients (void)
 {
-	int		i;
+	int32_t		i;
 
 	svs.maxclients = 1;
 		
@@ -300,7 +300,7 @@ void SV_BroadcastPrintf (char *fmt, ...)
 {
 	va_list		argptr;
 	char		string[1024];
-	int			i;
+	int32_t			i;
 	
 	va_start (argptr,fmt);
 	vsprintf (string, fmt,argptr);
@@ -344,8 +344,8 @@ if (crash = true), don't bother sending signofs
 */
 void SV_DropClient (qboolean crash)
 {
-	int		saveSelf;
-	int		i;
+	int32_t		saveSelf;
+	int32_t		i;
 	client_t *client;
 
 	if (!crash)
@@ -406,8 +406,8 @@ This only happens at the end of a game, not between levels
 */
 void Host_ShutdownServer(qboolean crash)
 {
-	int		i;
-	int		count;
+	int32_t		i;
+	int32_t		count;
 	sizebuf_t	buf;
 	char		message[4];
 	double	start;
@@ -586,7 +586,7 @@ void _Host_Frame (float time)
 	static double		time1 = 0;
 	static double		time2 = 0;
 	static double		time3 = 0;
-	int			pass1, pass2, pass3;
+	int32_t			pass1, pass2, pass3;
 
 	if (setjmp (host_abortserver) )
 		return;			// something bad happened, or the server disconnected
@@ -680,8 +680,8 @@ void Host_Frame (float time)
 {
 	double	time1, time2;
 	static double	timetotal;
-	static int		timecount;
-	int		i, c, m;
+	static int32_t		timecount;
+	int32_t		i, c, m;
 
 	if (!serverprofile.value)
 	{
@@ -715,13 +715,13 @@ void Host_Frame (float time)
 //============================================================================
 
 
-extern int vcrFile;
+extern int32_t vcrFile;
 #define	VCR_SIGNATURE	0x56435231
 // "VCR1"
 
 void Host_InitVCR (quakeparms_t *parms)
 {
-	int		i, len, n;
+	int32_t		i, len, n;
 	char	*p;
 	
 	if (COM_CheckParm("-playback"))
@@ -733,16 +733,16 @@ void Host_InitVCR (quakeparms_t *parms)
 		if (vcrFile == -1)
 			Sys_Error("playback file not found\n");
 
-		Sys_FileRead (vcrFile, &i, sizeof(int));
+		Sys_FileRead (vcrFile, &i, sizeof(int32_t));
 		if (i != VCR_SIGNATURE)
 			Sys_Error("Invalid signature in vcr file\n");
 
-		Sys_FileRead (vcrFile, &com_argc, sizeof(int));
+		Sys_FileRead (vcrFile, &com_argc, sizeof(int32_t));
 		com_argv = malloc(com_argc * sizeof(char *));
 		com_argv[0] = parms->argv[0];
 		for (i = 0; i < com_argc; i++)
 		{
-			Sys_FileRead (vcrFile, &len, sizeof(int));
+			Sys_FileRead (vcrFile, &len, sizeof(int32_t));
 			p = malloc(len);
 			Sys_FileRead (vcrFile, p, len);
 			com_argv[i+1] = p;
@@ -757,20 +757,20 @@ void Host_InitVCR (quakeparms_t *parms)
 		vcrFile = Sys_FileOpenWrite("quake.vcr");
 
 		i = VCR_SIGNATURE;
-		Sys_FileWrite(vcrFile, &i, sizeof(int));
+		Sys_FileWrite(vcrFile, &i, sizeof(int32_t));
 		i = com_argc - 1;
-		Sys_FileWrite(vcrFile, &i, sizeof(int));
+		Sys_FileWrite(vcrFile, &i, sizeof(int32_t));
 		for (i = 1; i < com_argc; i++)
 		{
 			if (i == n)
 			{
 				len = 10;
-				Sys_FileWrite(vcrFile, &len, sizeof(int));
+				Sys_FileWrite(vcrFile, &len, sizeof(int32_t));
 				Sys_FileWrite(vcrFile, "-playback", len);
 				continue;
 			}
 			len = Q_strlen(com_argv[i]) + 1;
-			Sys_FileWrite(vcrFile, &len, sizeof(int));
+			Sys_FileWrite(vcrFile, &len, sizeof(int32_t));
 			Sys_FileWrite(vcrFile, com_argv[i], len);
 		}
 	}

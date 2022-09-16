@@ -30,14 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/ioctl.h>
 #include <errno.h>
 
-extern int gethostname (char *, int);
-extern int close (int);
+extern int32_t gethostname (char *, int32_t);
+extern int32_t close (int32_t);
 
 extern cvar_t hostname;
 
-static int net_acceptsocket = -1;		// socket for fielding new connections
-static int net_controlsocket;
-static int net_broadcastsocket = 0;
+static int32_t net_acceptsocket = -1;		// socket for fielding new connections
+static int32_t net_controlsocket;
+static int32_t net_broadcastsocket = 0;
 static struct qsockaddr broadcastaddr;
 
 static unsigned long myAddr;
@@ -46,7 +46,7 @@ static unsigned long myAddr;
 
 //=============================================================================
 
-int UDP_Init (void)
+int32_t UDP_Init (void)
 {
 	struct hostent *local;
 	char	buff[MAXHOSTNAMELEN];
@@ -59,7 +59,7 @@ int UDP_Init (void)
 	// determine my name & address
 	gethostname(buff, MAXHOSTNAMELEN);
 	local = gethostbyname(buff);
-	myAddr = *(int *)local->h_addr_list[0];
+	myAddr = *(int32_t *)local->h_addr_list[0];
 
 	// if the quake hostname isn't set, set it to the machine name
 	if (Q_strcmp(hostname.string, "UNNAMED") == 0)
@@ -118,9 +118,9 @@ void UDP_Listen (qboolean state)
 
 //=============================================================================
 
-int UDP_OpenSocket (int port)
+int32_t UDP_OpenSocket (int32_t port)
 {
-	int newsocket;
+	int32_t newsocket;
 	struct sockaddr_in address;
 	qboolean _true = true;
 
@@ -145,7 +145,7 @@ ErrorReturn:
 
 //=============================================================================
 
-int UDP_CloseSocket (int socket)
+int32_t UDP_CloseSocket (int32_t socket)
 {
 	if (socket == net_broadcastsocket)
 		net_broadcastsocket = 0;
@@ -162,15 +162,15 @@ this lets you type only as much of the net address as required, using
 the local network components to fill in the rest
 ============
 */
-static int PartialIPAddress (char *in, struct qsockaddr *hostaddr)
+static int32_t PartialIPAddress (char *in, struct qsockaddr *hostaddr)
 {
 	char buff[256];
 	char *b;
-	int addr;
-	int num;
-	int mask;
-	int run;
-	int port;
+	int32_t addr;
+	int32_t num;
+	int32_t mask;
+	int32_t run;
+	int32_t port;
 	
 	buff[0] = '.';
 	b = buff;
@@ -212,14 +212,14 @@ static int PartialIPAddress (char *in, struct qsockaddr *hostaddr)
 }
 //=============================================================================
 
-int UDP_Connect (int socket, struct qsockaddr *addr)
+int32_t UDP_Connect (int32_t socket, struct qsockaddr *addr)
 {
 	return 0;
 }
 
 //=============================================================================
 
-int UDP_CheckNewConnections (void)
+int32_t UDP_CheckNewConnections (void)
 {
 	unsigned long	available;
 
@@ -235,10 +235,10 @@ int UDP_CheckNewConnections (void)
 
 //=============================================================================
 
-int UDP_Read (int socket, byte *buf, int len, struct qsockaddr *addr)
+int32_t UDP_Read (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr)
 {
-	int addrlen = sizeof (struct qsockaddr);
-	int ret;
+	int32_t addrlen = sizeof (struct qsockaddr);
+	int32_t ret;
 
 	ret = recvfrom (socket, buf, len, 0, (struct sockaddr *)addr, &addrlen);
 	if (ret == -1 && (errno == EWOULDBLOCK || errno == ECONNREFUSED))
@@ -248,9 +248,9 @@ int UDP_Read (int socket, byte *buf, int len, struct qsockaddr *addr)
 
 //=============================================================================
 
-int UDP_MakeSocketBroadcastCapable (int socket)
+int32_t UDP_MakeSocketBroadcastCapable (int32_t socket)
 {
-	int				i = 1;
+	int32_t				i = 1;
 
 	// make this socket broadcast capable
 	if (setsockopt(socket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) < 0)
@@ -262,9 +262,9 @@ int UDP_MakeSocketBroadcastCapable (int socket)
 
 //=============================================================================
 
-int UDP_Broadcast (int socket, byte *buf, int len)
+int32_t UDP_Broadcast (int32_t socket, byte *buf, int32_t len)
 {
-	int ret;
+	int32_t ret;
 
 	if (socket != net_broadcastsocket)
 	{
@@ -283,9 +283,9 @@ int UDP_Broadcast (int socket, byte *buf, int len)
 
 //=============================================================================
 
-int UDP_Write (int socket, byte *buf, int len, struct qsockaddr *addr)
+int32_t UDP_Write (int32_t socket, byte *buf, int32_t len, struct qsockaddr *addr)
 {
-	int ret;
+	int32_t ret;
 
 	ret = sendto (socket, buf, len, 0, (struct sockaddr *)addr, sizeof(struct qsockaddr));
 	if (ret == -1 && errno == EWOULDBLOCK)
@@ -298,7 +298,7 @@ int UDP_Write (int socket, byte *buf, int len, struct qsockaddr *addr)
 char *UDP_AddrToString (struct qsockaddr *addr)
 {
 	static char buffer[22];
-	int haddr;
+	int32_t haddr;
 
 	haddr = ntohl(((struct sockaddr_in *)addr)->sin_addr.s_addr);
 	sprintf(buffer, "%d.%d.%d.%d:%d", (haddr >> 24) & 0xff, (haddr >> 16) & 0xff, (haddr >> 8) & 0xff, haddr & 0xff, ntohs(((struct sockaddr_in *)addr)->sin_port));
@@ -307,10 +307,10 @@ char *UDP_AddrToString (struct qsockaddr *addr)
 
 //=============================================================================
 
-int UDP_StringToAddr (char *string, struct qsockaddr *addr)
+int32_t UDP_StringToAddr (char *string, struct qsockaddr *addr)
 {
-	int ha1, ha2, ha3, ha4, hp;
-	int ipaddr;
+	int32_t ha1, ha2, ha3, ha4, hp;
+	int32_t ipaddr;
 
 	sscanf(string, "%d.%d.%d.%d:%d", &ha1, &ha2, &ha3, &ha4, &hp);
 	ipaddr = (ha1 << 24) | (ha2 << 16) | (ha3 << 8) | ha4;
@@ -323,10 +323,10 @@ int UDP_StringToAddr (char *string, struct qsockaddr *addr)
 
 //=============================================================================
 
-int UDP_GetSocketAddr (int socket, struct qsockaddr *addr)
+int32_t UDP_GetSocketAddr (int32_t socket, struct qsockaddr *addr)
 {
-	int addrlen = sizeof(struct qsockaddr);
-	unsigned int a;
+	int32_t addrlen = sizeof(struct qsockaddr);
+	uint32_t a;
 
 	Q_memset(addr, 0, sizeof(struct qsockaddr));
 	getsockname(socket, (struct sockaddr *)addr, &addrlen);
@@ -339,7 +339,7 @@ int UDP_GetSocketAddr (int socket, struct qsockaddr *addr)
 
 //=============================================================================
 
-int UDP_GetNameFromAddr (struct qsockaddr *addr, char *name)
+int32_t UDP_GetNameFromAddr (struct qsockaddr *addr, char *name)
 {
 	struct hostent *hostentry;
 
@@ -356,7 +356,7 @@ int UDP_GetNameFromAddr (struct qsockaddr *addr, char *name)
 
 //=============================================================================
 
-int UDP_GetAddrFromName(char *name, struct qsockaddr *addr)
+int32_t UDP_GetAddrFromName(char *name, struct qsockaddr *addr)
 {
 	struct hostent *hostentry;
 
@@ -369,14 +369,14 @@ int UDP_GetAddrFromName(char *name, struct qsockaddr *addr)
 
 	addr->sa_family = AF_INET;
 	((struct sockaddr_in *)addr)->sin_port = htons(net_hostport);	
-	((struct sockaddr_in *)addr)->sin_addr.s_addr = *(int *)hostentry->h_addr_list[0];
+	((struct sockaddr_in *)addr)->sin_addr.s_addr = *(int32_t *)hostentry->h_addr_list[0];
 
 	return 0;
 }
 
 //=============================================================================
 
-int UDP_AddrCompare (struct qsockaddr *addr1, struct qsockaddr *addr2)
+int32_t UDP_AddrCompare (struct qsockaddr *addr1, struct qsockaddr *addr2)
 {
 	if (addr1->sa_family != addr2->sa_family)
 		return -1;
@@ -392,13 +392,13 @@ int UDP_AddrCompare (struct qsockaddr *addr1, struct qsockaddr *addr2)
 
 //=============================================================================
 
-int UDP_GetSocketPort (struct qsockaddr *addr)
+int32_t UDP_GetSocketPort (struct qsockaddr *addr)
 {
 	return ntohs(((struct sockaddr_in *)addr)->sin_port);
 }
 
 
-int UDP_SetSocketPort (struct qsockaddr *addr, int port)
+int32_t UDP_SetSocketPort (struct qsockaddr *addr, int32_t port)
 {
 	((struct sockaddr_in *)addr)->sin_port = htons(port);
 	return 0;

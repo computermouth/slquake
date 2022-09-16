@@ -188,11 +188,11 @@ typedef struct
 {
 	vec3_t	origin;
 	vec3_t	angles;
-	int		modelindex;
-	int		frame;
-	int		colormap;
-	int		skin;
-	int		effects;
+	int32_t		modelindex;
+	int32_t		frame;
+	int32_t		colormap;
+	int32_t		skin;
+	int32_t		effects;
 } entity_state_t;
 
 
@@ -230,10 +230,10 @@ typedef struct
 {
 	char	*basedir;
 	char	*cachedir;		// for development over ISDN lines
-	int		argc;
+	int32_t		argc;
 	char	**argv;
 	void	*membase;
-	int		memsize;
+	int32_t		memsize;
 } quakeparms_t;
 
 
@@ -257,7 +257,7 @@ extern	qboolean	host_initialized;		// true if into command execution
 extern	double		host_frametime;
 extern	byte		*host_basepal;
 extern	byte		*host_colormap;
-extern	int			host_framecount;	// incremented every frame, never reset
+extern	int32_t			host_framecount;	// incremented every frame, never reset
 extern	double		realtime;			// not bounded in any way, changed at
 										// start of every frame, never reset
 
@@ -274,9 +274,9 @@ void Host_ClientCommands (char *fmt, ...);
 void Host_ShutdownServer (qboolean crash);
 
 extern qboolean		msg_suppress_1;		// suppresses resolution and cache size console output
-extern int		current_skill;		// skill level for currently loaded level (in case
+extern int32_t		current_skill;		// skill level for currently loaded level (in case
 extern qboolean		isDedicated;
-extern int		minimum_memory;
+extern int32_t		minimum_memory;
 
 //
 // chase
