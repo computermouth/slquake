@@ -58,7 +58,7 @@ typedef struct
 	int32_t				samplepos;				// in mono samples
 	int32_t				samplebits;
 	int32_t				speed;
-	unsigned char	*buffer;
+	uint8_t	*buffer;
 } dma_t;
 
 typedef struct

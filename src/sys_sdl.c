@@ -438,11 +438,11 @@ int32_t main (int32_t c, char **v)
 Sys_MakeCodeWriteable
 ================
 */
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
+void Sys_MakeCodeWriteable (uint32_t startaddr, uint32_t length)
 {
 
 	int32_t r;
-	unsigned long addr;
+	uint32_t addr;
 	int32_t psize = getpagesize();
 
 	fprintf(stderr, "writable code %lx-%lx\n", startaddr, startaddr+length);

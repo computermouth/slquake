@@ -106,8 +106,8 @@ typedef struct
 typedef struct miptex_s
 {
 	char		name[16];
-	unsigned	width, height;
-	unsigned	offsets[MIPLEVELS];		// four mip maps stored
+	uint32_t	width, height;
+	uint32_t	offsets[MIPLEVELS];		// four mip maps stored
 } miptex_t;
 
 
@@ -160,8 +160,8 @@ typedef struct
 	short		children[2];	// negative numbers are -(leafs+1), not nodes
 	short		mins[3];		// for sphere culling
 	short		maxs[3];
-	unsigned short	firstface;
-	unsigned short	numfaces;	// counting both sides
+	uint16_t	firstface;
+	uint16_t	numfaces;	// counting both sides
 } dnode_t;
 
 typedef struct
@@ -183,7 +183,7 @@ typedef struct texinfo_s
 // counterclockwise use of the edge in a face
 typedef struct
 {
-	unsigned short	v[2];		// vertex numbers
+	uint16_t	v[2];		// vertex numbers
 } dedge_t;
 
 #define	MAXLIGHTMAPS	4
@@ -220,8 +220,8 @@ typedef struct
 	short		mins[3];			// for frustum culling
 	short		maxs[3];
 
-	unsigned short		firstmarksurface;
-	unsigned short		nummarksurfaces;
+	uint16_t		firstmarksurface;
+	uint16_t		nummarksurfaces;
 
 	byte		ambient_level[NUM_AMBIENTS];
 } dleaf_t;
@@ -277,7 +277,7 @@ extern	int32_t			numedges;
 extern	dedge_t		dedges[MAX_MAP_EDGES];
 
 extern	int32_t			nummarksurfaces;
-extern	unsigned short	dmarksurfaces[MAX_MAP_MARKSURFACES];
+extern	uint16_t	dmarksurfaces[MAX_MAP_MARKSURFACES];
 
 extern	int32_t			numsurfedges;
 extern	int32_t			dsurfedges[MAX_MAP_SURFEDGES];

@@ -530,15 +530,15 @@ typedef struct
     char	version;
     char	encoding;
     char	bits_per_pixel;
-    unsigned short	xmin,ymin,xmax,ymax;
-    unsigned short	hres,vres;
-    unsigned char	palette[48];
+    uint16_t	xmin,ymin,xmax,ymax;
+    uint16_t	hres,vres;
+    uint8_t	palette[48];
     char	reserved;
     char	color_planes;
-    unsigned short	bytes_per_line;
-    unsigned short	palette_type;
+    uint16_t	bytes_per_line;
+    uint16_t	palette_type;
     char	filler[58];
-    unsigned char	data;			// unbounded
+    uint8_t	data;			// unbounded
 } pcx_t;
 
 /* 

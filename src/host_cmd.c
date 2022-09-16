@@ -733,7 +733,7 @@ void Host_Say(qboolean teamonly)
 	client_t *save;
 	int32_t		j;
 	char	*p;
-	unsigned char	text[64];
+	uint8_t	text[64];
 	qboolean	fromServer = false;
 
 	if (cmd_source == src_command)

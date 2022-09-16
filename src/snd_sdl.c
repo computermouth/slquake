@@ -12,7 +12,7 @@ extern int32_t desired_bits;
 extern cvar_t nosound;
 extern qboolean sound_started;
 
-static void paint_audio(void *unused, Uint8 *stream, int32_t len)
+static void paint_audio(void *unused, uint8_t *stream, int32_t len)
 {
 	if ( shm ) {
 		shm->buffer = stream;

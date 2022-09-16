@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct qsockaddr
 {
 	short sa_family;
-	unsigned char sa_data[14];
+	uint8_t sa_data[14];
 };
 
 
@@ -245,16 +245,16 @@ extern hostcache_t hostcache[HOSTCACHESIZE];
 
 #if !defined(_WIN32 ) && !defined (__linux__)
 #ifndef htonl
-extern unsigned long htonl (unsigned long hostlong);
+extern uint32_t htonl (uint32_t hostlong);
 #endif
 #ifndef htons
-extern unsigned short htons (unsigned short hostshort);
+extern uint16_t htons (uint16_t hostshort);
 #endif
 #ifndef ntohl
-extern unsigned long ntohl (unsigned long netlong);
+extern uint32_t ntohl (uint32_t netlong);
 #endif
 #ifndef ntohs
-extern unsigned short ntohs (unsigned short netshort);
+extern uint16_t ntohs (uint16_t netshort);
 #endif
 #endif
 

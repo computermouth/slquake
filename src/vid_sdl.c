@@ -7,7 +7,7 @@
 #include "input.h"
 
 viddef_t    vid;                // global video state
-unsigned short  d_8to16table[256];
+uint16_t  d_8to16table[256];
 
 #define    BASEWIDTH    640
 #define    BASEHEIGHT   480
@@ -22,7 +22,7 @@ static SDL_Surface *screen = NULL;
 static float   mouse_x, mouse_y;
 static int32_t mouse_oldbuttonstate = 0;
 
-void    VID_SetPalette (unsigned char *palette)
+void    VID_SetPalette (uint8_t *palette)
 {
     int32_t i;
     SDL_Color colors[256];
@@ -36,18 +36,16 @@ void    VID_SetPalette (unsigned char *palette)
     SDL_SetColors(screen, colors, 0, 256);
 }
 
-void    VID_ShiftPalette (unsigned char *palette)
+void    VID_ShiftPalette (uint8_t *palette)
 {
     VID_SetPalette(palette);
 }
 
-void    VID_Init (unsigned char *palette)
+void    VID_Init (uint8_t *palette)
 {
     int32_t pnum, chunk;
     byte *cache;    int32_t cachesize;
-    Uint8 video_bpp;
-    Uint16 video_w, video_h;
-    Uint32 flags;
+    uint32_t flags;
 
     // Load the SDL library
     if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_CDROM) < 0)
@@ -167,12 +165,12 @@ D_BeginDirectRect
 */
 void D_BeginDirectRect (int32_t x, int32_t y, byte *pbitmap, int32_t width, int32_t height)
 {
-    Uint8 *offset;
+    uint8_t *offset;
 
 
     if (!screen) return;
     if ( x < 0 ) x = screen->w+x-1;
-    offset = (Uint8 *)screen->pixels + y*screen->pitch + x;
+    offset = (uint8_t *)screen->pixels + y*screen->pitch + x;
     while ( height-- )
     {
         memcpy(offset, pbitmap, width);

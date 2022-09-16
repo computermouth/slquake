@@ -48,7 +48,7 @@ char	com_cmdline[CMDLINE_LENGTH];
 qboolean		standard_quake = true, rogue, hipnotic;
 
 // this graphic needs to be in the pak file to use registered features
-unsigned short pop[] =
+uint16_t pop[] =
 {
  0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 ,0x0000,0x0000,0x6600,0x0000,0x0000,0x0000,0x6600,0x0000
@@ -607,7 +607,7 @@ int32_t MSG_ReadByte (void)
 		return -1;
 	}
 		
-	c = (unsigned char)net_message.data[msg_readcount];
+	c = (uint8_t)net_message.data[msg_readcount];
 	msg_readcount++;
 	
 	return c;
@@ -992,7 +992,7 @@ being registered.
 void COM_CheckRegistered (void)
 {
 	int32_t             h;
-	unsigned short  check[128];
+	uint16_t  check[128];
 
 	COM_OpenFile("gfx/pop.lmp", &h);
 

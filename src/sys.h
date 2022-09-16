@@ -42,7 +42,7 @@ void Sys_mkdir (char *path);
 //
 // memory protection
 //
-void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length);
+void Sys_MakeCodeWriteable (uint32_t startaddr, uint32_t length);
 
 //
 // system IO

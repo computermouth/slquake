@@ -40,7 +40,7 @@ static int32_t net_controlsocket;
 static int32_t net_broadcastsocket = 0;
 static struct qsockaddr broadcastaddr;
 
-static unsigned long myAddr;
+static uint32_t myAddr;
 
 #include "net_udp.h"
 
@@ -221,7 +221,7 @@ int32_t UDP_Connect (int32_t socket, struct qsockaddr *addr)
 
 int32_t UDP_CheckNewConnections (void)
 {
-	unsigned long	available;
+	uint32_t	available;
 
 	if (net_acceptsocket == -1)
 		return -1;

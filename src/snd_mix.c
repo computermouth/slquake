@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 #include "winquake.h"
 #else
-#define DWORD	unsigned long
+#define DWORD	uint32_t
 #endif
 
 #define	PAINTBUFFER_SIZE	512
@@ -214,7 +214,7 @@ void S_TransferPaintBuffer(int32_t endtime)
 	}
 	else if (shm->samplebits == 8)
 	{
-		unsigned char *out = (unsigned char *) pbuf;
+		uint8_t *out = (uint8_t *) pbuf;
 		while (count--)
 		{
 			val = (*p * snd_vol) >> 8;
@@ -347,7 +347,7 @@ void SND_PaintChannelFrom8 (channel_t *ch, sfxcache_t *sc, int32_t count)
 {
 	int32_t 	data;
 	int32_t		*lscale, *rscale;
-	unsigned char *sfx;
+	uint8_t *sfx;
 	int32_t		i;
 
 	if (ch->leftvol > 255)

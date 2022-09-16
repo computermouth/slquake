@@ -99,7 +99,7 @@ void R_MakeSky (void)
 	int32_t			x, y;
 	int32_t			ofs, baseofs;
 	int32_t			xshift, yshift;
-	unsigned	*pnewsky;
+	uint32_t	*pnewsky;
 	static int32_t	xlast = -1, ylast = -1;
 
 	xshift = skytime*skyspeed;
@@ -111,7 +111,7 @@ void R_MakeSky (void)
 	xlast = xshift;
 	ylast = yshift;
 	
-	pnewsky = (unsigned *)&newsky[0];
+	pnewsky = (uint32_t *)&newsky[0];
 
 	for (y=0 ; y<SKYSIZE ; y++)
 	{
@@ -124,10 +124,10 @@ void R_MakeSky (void)
 			*(byte *)pnewsky = (*((byte *)pnewsky + 128) &
 						*(byte *)&bottommask[ofs]) |
 						*(byte *)&bottomsky[ofs];
-			pnewsky = (unsigned *)((byte *)pnewsky + 1);
+			pnewsky = (uint32_t *)((byte *)pnewsky + 1);
 		}
 
-		pnewsky += 128 / sizeof (unsigned);
+		pnewsky += 128 / sizeof (uint32_t);
 	}
 
 	r_skymade = 1;
@@ -144,14 +144,14 @@ void R_GenSkyTile (void *pdest)
 	int32_t			x, y;
 	int32_t			ofs, baseofs;
 	int32_t			xshift, yshift;
-	unsigned	*pnewsky;
-	unsigned	*pd;
+	uint32_t	*pnewsky;
+	uint32_t	*pd;
 
 	xshift = skytime*skyspeed;
 	yshift = skytime*skyspeed;
 
-	pnewsky = (unsigned *)&newsky[0];
-	pd = (unsigned *)pdest;
+	pnewsky = (uint32_t *)&newsky[0];
+	pd = (uint32_t *)pdest;
 
 	for (y=0 ; y<SKYSIZE ; y++)
 	{
@@ -164,10 +164,10 @@ void R_GenSkyTile (void *pdest)
 			*(byte *)pd = (*((byte *)pnewsky + 128) &
 						*(byte *)&bottommask[ofs]) |
 						*(byte *)&bottomsky[ofs];
-			pnewsky = (unsigned *)((byte *)pnewsky + 1);
-			pd = (unsigned *)((byte *)pd + 1);
+			pnewsky = (uint32_t *)((byte *)pnewsky + 1);
+			pd = (uint32_t *)((byte *)pd + 1);
 		}
-		pnewsky += 128 / sizeof (unsigned);
+		pnewsky += 128 / sizeof (uint32_t);
 	}
 }
 
@@ -183,13 +183,13 @@ void R_GenSkyTile16 (void *pdest)
 	int32_t				ofs, baseofs;
 	int32_t				xshift, yshift;
 	byte			*pnewsky;
-	unsigned short	*pd;
+	uint16_t	*pd;
 
 	xshift = skytime * skyspeed;
 	yshift = skytime * skyspeed;
 
 	pnewsky = (byte *)&newsky[0];
-	pd = (unsigned short *)pdest;
+	pd = (uint16_t *)pdest;
 
 	for (y=0 ; y<SKYSIZE ; y++)
 	{
